@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from './components/Header';
 import User from './features/user/User';
-import Login from './features/user/Login';
-import Logout from './features/user/Logout';
+import Login from './components/authentication/Login';
+import Logout from './components/authentication/Logout';
 
 const App = () => {
   const loggedIn = false;
