@@ -20,9 +20,8 @@ root.render(
       }}
     >
       <Provider store={store}>
-        <CssBaseline>
-          <App />
-        </CssBaseline>
+        <CssBaseline />
+        <App />
       </Provider>
     </Auth0Provider>
   </React.StrictMode>
