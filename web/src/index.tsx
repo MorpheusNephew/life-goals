@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import './index.css';
 import { Auth0Provider } from '@auth0/auth0-react';
+import { CssBaseline } from '@mui/material';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -20,7 +20,9 @@ root.render(
       }}
     >
       <Provider store={store}>
-        <App />
+        <CssBaseline>
+          <App />
+        </CssBaseline>
       </Provider>
     </Auth0Provider>
   </React.StrictMode>
