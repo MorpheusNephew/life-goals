@@ -3,10 +3,12 @@ import Header from './components/Header';
 import User from './features/user/User';
 import Login from './components/authentication/Login';
 import Logout from './components/authentication/Logout';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const App = () => {
-  const loggedIn = false;
-  const AuthButton = () => (loggedIn ? <Logout /> : <Login />);
+  const { isAuthenticated } = useAuth0();
+
+  const AuthButton = () => (isAuthenticated ? <Logout /> : <Login />);
 
   return (
     <>

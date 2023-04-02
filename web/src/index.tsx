@@ -5,15 +5,21 @@ import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import { Auth0Provider } from '@auth0/auth0-react';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Auth0Provider
+      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID ?? ''}
+      domain={process.env.REACT_APP_AUTH0_DOMAIN ?? ''}
+    >
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Auth0Provider>
   </React.StrictMode>
 );
 
