@@ -1,19 +1,26 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { FC } from 'react';
-import User from '../../features/user/User';
+import UserInfo from '../../features/user/UserInfo';
 import Login from '../authentication/Login';
 import Logout from '../authentication/Logout';
 
 const Header: FC = () => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
 
   const AuthButton = () => (isAuthenticated ? <Logout /> : <Login />);
 
   return (
     <header>
-      Magic is happening
-      <User />
-      <AuthButton />
+      <ul>
+        {user && (
+          <li>
+            <UserInfo user={user} />
+          </li>
+        )}
+        <li>
+          <AuthButton />
+        </li>
+      </ul>
     </header>
   );
 };
