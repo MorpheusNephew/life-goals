@@ -1,0 +1,13 @@
+{
+  "name": "api-proxy",
+  "version": "1.0.0",
+  "description": "GraphQL server that will handle all communications with back-end services",
+  "main": "index.js",
+  "author": "Jelani Jackson",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "typescript": "^5.0.3"
+  }
+}
