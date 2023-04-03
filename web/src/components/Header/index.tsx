@@ -7,20 +7,22 @@ import Logout from '../authentication/Logout';
 const Header: FC = () => {
   const { isAuthenticated, user } = useAuth0();
 
-  const AuthButton = () => (isAuthenticated ? <Logout /> : <Login />);
-
   return (
     <header>
-      <ul>
-        {user && (
+      {isAuthenticated ? (
+        <ul>
+          {user && (
+            <li>
+              <UserInfo user={user} />
+            </li>
+          )}
           <li>
-            <UserInfo user={user} />
+            <Logout />
           </li>
-        )}
-        <li>
-          <AuthButton />
-        </li>
-      </ul>
+        </ul>
+      ) : (
+        <Login />
+      )}
     </header>
   );
 };
