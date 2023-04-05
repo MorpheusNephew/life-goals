@@ -6,8 +6,17 @@
   "author": "Jelani Jackson",
   "license": "MIT",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "compile": "tsc",
+    "start": "yarn compile && node ./dist/index.js"
+  },
   "devDependencies": {
     "@types/node": "^18.15.11",
     "typescript": "^5.0.3"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.6.0",
+    "graphql": "^16.6.0"
   }
 }
