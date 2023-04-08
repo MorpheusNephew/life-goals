@@ -11,8 +11,8 @@ const jwtCheck = auth({
 const privateRouter = express
   .Router()
   .use(jwtCheck)
-  .use(async (req, _res, next) => {
-    console.log({ authorization: req.headers.authorization });
+  .use(async (req, res, next) => {
+    res.locals.userId = req.auth?.payload?.sub;
     next();
   })
   .use('/goals', privateGoalsRouter);
