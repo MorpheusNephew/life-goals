@@ -17,6 +17,7 @@ root.render(
       domain={process.env.REACT_APP_AUTH0_DOMAIN ?? ''}
       authorizationParams={{
         redirect_uri: window.location.origin,
+        audience: process.env.REACT_APP_AUTH0_AUDIENCE,
       }}
     >
       <Provider store={store}>
