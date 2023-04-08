@@ -9,20 +9,22 @@ const Header: FC = () => {
 
   return (
     <header>
-      {isAuthenticated ? (
-        <ul>
-          {user && (
+      <nav>
+        {isAuthenticated ? (
+          <ul>
+            {user && (
+              <li>
+                <UserInfo user={user} />
+              </li>
+            )}
             <li>
-              <UserInfo user={user} />
+              <Logout />
             </li>
-          )}
-          <li>
-            <Logout />
-          </li>
-        </ul>
-      ) : (
-        <Login />
-      )}
+          </ul>
+        ) : (
+          <Login />
+        )}
+      </nav>
     </header>
   );
 };
