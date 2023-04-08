@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { CssBaseline } from '@mui/material';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Root from './routes/Root';
+import Root from './routes/root';
+import Home from './routes/home';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -14,6 +15,12 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+    ],
   },
 ]);
 

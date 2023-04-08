@@ -1,8 +1,8 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { FC } from 'react';
 import UserInfo from '../../features/user/UserInfo';
-import Login from '../authentication/Login';
-import Logout from '../authentication/Logout';
+import Login from '../authentication/login';
+import Logout from '../authentication/logout';
 
 const Header: FC = () => {
   const { isAuthenticated, user } = useAuth0();
