@@ -8,6 +8,13 @@ const jwtCheck = auth({
   tokenSigningAlg: process.env.AUTH0_TOKEN_SIGNING_ALG,
 });
 
-const privateRouter = express.Router().use(jwtCheck).use('/goals', privateGoalsRouter);
+const privateRouter = express
+  .Router()
+  .use(jwtCheck)
+  .use(async (req, _res, next) => {
+    console.log({ authorization: req.headers.authorization });
+    next();
+  })
+  .use('/goals', privateGoalsRouter);
 
 export default privateRouter;
