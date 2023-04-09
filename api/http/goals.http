@@ -1,0 +1,50 @@
+@goalId=YourGoalId
+@authToken=YourAuthToken
+
+
+### Create a goal
+POST http://localhost:3001/api/private/goals
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "text": "Put on muscle",
+  "advice": "Get in the gym!",
+  "public": true
+}
+
+### Get a specific goal
+GET http://localhost:3001/api/private/goals/{{goalId}}
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+### Get all of your goals
+GET http://localhost:3001/api/private/goals
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+### Get all public goals
+GET http://localhost:3001/api/public/goals
+Accept: application/json
+Content-Type: application/json
+
+### Update
+PUT http://localhost:3001/api/private/goals/{{goalId}}
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "text": "Figure out the meaning of life",
+  "advice": "Simple, just do it",
+  "public": false
+}
+
+### Delete
+DELETE http://localhost:3001/api/private/goals/{{goalId}}
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
