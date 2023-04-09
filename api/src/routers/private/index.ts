@@ -6,7 +6,7 @@ import {
   AUTH0_ISSUER_BASE_URL,
   AUTH0_TOKEN_SIGNING_ALG,
 } from '../../utils/environmentVariables';
-import usersRouter from './users';
+import privateUsersRouter from './users';
 
 const jwtCheck = auth({
   audience: AUTH0_AUDIENCE,
@@ -22,6 +22,6 @@ const privateRouter = express
     next();
   })
   .use('/goals', privateGoalsRouter)
-  .use('/users', usersRouter);
+  .use('/users', privateUsersRouter);
 
 export default privateRouter;
