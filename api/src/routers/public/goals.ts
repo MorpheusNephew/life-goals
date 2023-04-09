@@ -1,7 +1,10 @@
 import express from 'express';
+import Goals from '../../models/goals';
 
 const publicGoalsRouter = express.Router().get('/', (_req, res) => {
-  res.send('Public Goals Router');
+  const goals = Goals.getAllGoals(true).map((goal) => goal.toResource());
+
+  res.json(goals);
 });
 
 export default publicGoalsRouter;
