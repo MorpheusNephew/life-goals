@@ -3,12 +3,16 @@ import { FC } from 'react';
 import UserInfo from '../../features/user/UserInfo';
 import Login from '../authentication/login';
 import Logout from '../authentication/logout';
+import { AppBar } from '@mui/material';
 
 const Header: FC = () => {
   const { isAuthenticated, user } = useAuth0();
 
   return (
-    <header>
+    <AppBar
+      position="fixed"
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
       <nav>
         {isAuthenticated ? (
           <ul>
@@ -25,7 +29,7 @@ const Header: FC = () => {
           <Login />
         )}
       </nav>
-    </header>
+    </AppBar>
   );
 };
 

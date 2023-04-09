@@ -5,24 +5,14 @@ import { store } from './app/store';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { CssBaseline } from '@mui/material';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Root from './routes/root';
-import Home from './routes/home';
+import Routes from './routes';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />,
-    children: [
-      {
-        path: '/',
-        element: <Home />,
-      },
-    ],
-  },
-]);
 
 root.render(
   <React.StrictMode>
@@ -37,7 +27,7 @@ root.render(
     >
       <Provider store={store}>
         <CssBaseline />
-        <RouterProvider router={router} />
+        <Routes />
       </Provider>
     </Auth0Provider>
   </React.StrictMode>
