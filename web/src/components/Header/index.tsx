@@ -10,24 +10,26 @@ const Header: FC = () => {
 
   return (
     <AppBar
-      position="fixed"
+      position='fixed'
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <nav>
-        {isAuthenticated ? (
-          <ul>
-            {user && (
+        <ul>
+          {isAuthenticated ? (
+            <>
+              {user && (
+                <li>
+                  <UserInfo user={user} />
+                </li>
+              )}
               <li>
-                <UserInfo user={user} />
+                <Logout />
               </li>
-            )}
-            <li>
-              <Logout />
-            </li>
-          </ul>
-        ) : (
-          <Login />
-        )}
+            </>
+          ) : (
+            <Login />
+          )}
+        </ul>
       </nav>
     </AppBar>
   );
