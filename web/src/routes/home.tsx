@@ -2,15 +2,17 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
-  const [publicResponse, setPublicResponse] = useState<string>();
-  const [privateResponse, setPrivateResponse] = useState<string>();
+  const [publicResponse, setPublicResponse] = useState<object[]>();
+  const [privateResponse, setPrivateResponse] = useState<object[]>();
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+
+  const showGoal = (goal: any) => <p>{goal.text}</p>;
 
   useEffect(() => {
     (async () => {
       const publicGoals = await fetch('/api/public/goals');
 
-      setPublicResponse(await publicGoals.text());
+      setPublicResponse(await publicGoals.json());
     })();
   }, []);
 
@@ -35,7 +37,7 @@ const Home = () => {
 
         const privateGoals = await fetch('/api/private/goals', authHeaders);
 
-        setPrivateResponse(await privateGoals.text());
+        setPrivateResponse(await privateGoals.json());
 
         const userInfo = await fetch('/api/private/users/me', authHeaders);
 
@@ -48,15 +50,24 @@ const Home = () => {
 
   return (
     <>
-      This is the main content
       <section>
         <h2>Public</h2>
-        <p>{publicResponse}</p>
+        {publicResponse && publicResponse.length > 0 ? (
+          publicResponse?.map(showGoal)
+        ) : (
+          <p>No public goals posted</p>
+        )}
       </section>
-      <section>
-        <h2>Private</h2>
-        <p>{privateResponse}</p>
-      </section>
+      {isAuthenticated && (
+        <section>
+          <h2>Private</h2>
+          {privateResponse && privateResponse.length > 0 ? (
+            privateResponse?.map(showGoal)
+          ) : (
+            <p>You have no published goals</p>
+          )}
+        </section>
+      )}
     </>
   );
 };
