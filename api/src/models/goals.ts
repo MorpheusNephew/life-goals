@@ -23,8 +23,8 @@ export default class Goals {
 
   static getAllGoals(publicGoals: boolean, creator?: string) {
     return publicGoals
-      ? Goals.list.filter((goal) => goal.public)
-      : Goals.list.filter((goal) => goal.creator === creator);
+      ? Goals.list.filter((goal) => goal.public).reverse()
+      : Goals.list.filter((goal) => goal.creator === creator).reverse();
   }
 
   static getGoal(goalId: string) {
