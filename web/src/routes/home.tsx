@@ -1,5 +1,11 @@
-import { useState, useEffect } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
+import { useLoaderData } from 'react-router-dom';
+
+export const loader = async () => {
+  const publicGoals = await (await fetch('/api/public/goals')).json();
+
+  return { publicGoals };
+};
 
 const messages = defineMessages({
   publicGoalsHeader: {
@@ -13,25 +19,17 @@ const messages = defineMessages({
 });
 
 const Home = () => {
-  const [publicResponse, setPublicResponse] = useState<object[]>();
   const { formatMessage } = useIntl();
+  const { publicGoals } = useLoaderData() as { publicGoals: object[] };
 
   const showGoal = (goal: any) => <p>{goal.text}</p>;
-
-  useEffect(() => {
-    (async () => {
-      const publicGoals = await fetch('/api/public/goals');
-
-      setPublicResponse(await publicGoals.json());
-    })();
-  }, []);
 
   return (
     <>
       <section>
         <h2>{formatMessage(messages.publicGoalsHeader)}</h2>
-        {publicResponse && publicResponse.length > 0 ? (
-          publicResponse?.map(showGoal)
+        {publicGoals && publicGoals.length > 0 ? (
+          publicGoals?.map(showGoal)
         ) : (
           <p>{formatMessage(messages.noPublicGoals)}</p>
         )}

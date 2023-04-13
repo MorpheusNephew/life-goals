@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Home from './home';
+import Home, { loader as homeLoader } from './home';
 import Root from './root';
 import Goals from './goals';
 
@@ -10,6 +10,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
+        loader: homeLoader,
         element: <Home />,
       },
       {
