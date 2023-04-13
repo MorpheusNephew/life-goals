@@ -1,6 +1,6 @@
 import Header from '../components/header';
 import { Outlet } from 'react-router-dom';
-import { AppBar, Box, Drawer, Toolbar } from '@mui/material';
+import { AppBar, Box, Container, Drawer, Toolbar } from '@mui/material';
 
 const Root = () => {
   return (
@@ -25,10 +25,15 @@ const Root = () => {
       >
         <Header />
       </Drawer>
-      <Box component={'main'} sx={{ flexGrow: 1, p: 5, marginTop: -8 }}>
-        <Toolbar />
-        <Outlet />
-      </Box>
+      <Container>
+        <Box
+          component={'main'}
+          sx={{ flexGrow: 1, p: 5, marginTop: -8, textAlign: 'center' }}
+        >
+          <Toolbar />
+          <Outlet />
+        </Box>
+      </Container>
     </Box>
   );
 };
