@@ -10,6 +10,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { IntlProvider } from 'react-intl';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -27,7 +28,9 @@ root.render(
     >
       <Provider store={store}>
         <CssBaseline />
-        <Routes />
+        <IntlProvider locale="en" defaultLocale="en">
+          <Routes />
+        </IntlProvider>
       </Provider>
     </Auth0Provider>
   </React.StrictMode>
