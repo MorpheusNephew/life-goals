@@ -3,44 +3,58 @@ import { FC } from 'react';
 import UserInfo from '../../features/user/UserInfo';
 import Login from '../authentication/login';
 import Logout from '../authentication/logout';
-import { AppBar } from '@mui/material';
+import { List, ListItem } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { defineMessages, useIntl } from 'react-intl';
+
+const messages = defineMessages({
+  homeLink: {
+    id: 'app.header.homeLink',
+    defaultMessage: 'Home',
+    description: 'Link back to home page',
+  },
+  goalsLink: {
+    id: 'app.header.goalsLink',
+    defaultMessage: 'Your Goals',
+    description: 'Link to goals page',
+  },
+});
 
 const Header: FC = () => {
   const { isAuthenticated, user } = useAuth0();
+  const { formatMessage } = useIntl();
 
   return (
-    <AppBar
-      position="fixed"
-      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-    >
-      <nav>
-        <ul>
-          {isAuthenticated ? (
-            <>
-              {user && (
-                <>
-                  <li>
-                    <Link to={'/'}>Home</Link>
-                  </li>
-                  <li>
-                    <UserInfo user={user} />
-                  </li>
-                  <li>
-                    <Link to={'/goals'}>Your goals</Link>
-                  </li>
-                </>
-              )}
-              <li>
-                <Logout />
-              </li>
-            </>
-          ) : (
-            <Login />
-          )}
-        </ul>
-      </nav>
-    </AppBar>
+    <nav>
+      <List>
+        {isAuthenticated ? (
+          <>
+            {user && (
+              <>
+                <ListItem>
+                  <UserInfo user={user} />
+                </ListItem>
+                <ListItem>
+                  <Link to={'/'}>
+                    <button>{formatMessage(messages.homeLink)}</button>
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link to={'/goals'}>
+                    <button>{formatMessage(messages.goalsLink)}</button>
+                  </Link>
+                </ListItem>
+              </>
+            )}
+            <ListItem>
+              <Logout />
+            </ListItem>
+          </>
+        ) : (
+          <Login />
+        )}
+      </List>
+    </nav>
   );
 };
 
