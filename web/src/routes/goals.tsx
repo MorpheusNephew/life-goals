@@ -44,16 +44,14 @@ const Goals = () => {
     })();
   }, [getAccessTokenSilently]);
   return (
-    <>
-      <section>
-        <h2>{formatMessage(messages.personalGoalsHeader)}</h2>
-        {privateResponse && privateResponse.length > 0 ? (
-          privateResponse?.map(showGoal)
-        ) : (
-          <p>{formatMessage(messages.noPersonalGoals)}</p>
-        )}
-      </section>
-    </>
+    <section>
+      <h2>{formatMessage(messages.personalGoalsHeader)}</h2>
+      {privateResponse && privateResponse.length > 0 ? (
+        privateResponse?.map(showGoal)
+      ) : (
+        <p>{formatMessage(messages.noPersonalGoals)}</p>
+      )}
+    </section>
   );
 };
 
