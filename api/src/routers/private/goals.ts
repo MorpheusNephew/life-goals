@@ -17,7 +17,7 @@ const privateGoalsRouter = express
 
     if (!goal) {
       res.sendStatus(404);
-    } else if (goal.creator !== currentUser) {
+    } else if (goal.creator !== currentUser && !!goal.public) {
       res.sendStatus(403);
     } else {
       res.json(goal.toResource());
