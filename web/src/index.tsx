@@ -1,4 +1,3 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
@@ -16,24 +15,22 @@ const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(
-  <React.StrictMode>
-    <Auth0Provider
-      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID ?? ''}
-      domain={process.env.REACT_APP_AUTH0_DOMAIN ?? ''}
-      cacheLocation="localstorage"
-      authorizationParams={{
-        redirect_uri: window.location.origin,
-        audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-      }}
-    >
-      <Provider store={store}>
-        <CssBaseline />
-        <IntlProvider locale="en" defaultLocale="en">
-          <Routes />
-        </IntlProvider>
-      </Provider>
-    </Auth0Provider>
-  </React.StrictMode>
+  <Auth0Provider
+    clientId={process.env.REACT_APP_AUTH0_CLIENT_ID ?? ''}
+    domain={process.env.REACT_APP_AUTH0_DOMAIN ?? ''}
+    cacheLocation="localstorage"
+    authorizationParams={{
+      redirect_uri: window.location.origin,
+      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+    }}
+  >
+    <Provider store={store}>
+      <CssBaseline />
+      <IntlProvider locale="en" defaultLocale="en">
+        <Routes />
+      </IntlProvider>
+    </Provider>
+  </Auth0Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
