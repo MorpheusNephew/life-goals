@@ -1,6 +1,7 @@
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { useState, useEffect } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
+import Loading from '../components/loading';
 
 const messages = defineMessages({
   personalGoalsHeader: {
@@ -17,6 +18,7 @@ const showGoal = (goal: any) => <p>{goal.text}</p>;
 
 const Goals = () => {
   const [privateResponse, setPrivateResponse] = useState<object[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { formatMessage } = useIntl();
   const { getAccessTokenSilently } = useAuth0();
 
@@ -40,13 +42,17 @@ const Goals = () => {
         setPrivateResponse(await privateGoals.json());
       } catch (e) {
         console.warn(e);
+      } finally {
+        setIsLoading(false);
       }
     })();
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently, setIsLoading]);
   return (
     <section>
       <h2>{formatMessage(messages.personalGoalsHeader)}</h2>
-      {privateResponse && privateResponse.length > 0 ? (
+      {isLoading ? (
+        <Loading />
+      ) : privateResponse && privateResponse.length > 0 ? (
         privateResponse?.map(showGoal)
       ) : (
         <p>{formatMessage(messages.noPersonalGoals)}</p>
