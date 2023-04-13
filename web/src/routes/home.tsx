@@ -1,10 +1,20 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useEffect } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
+
+const messages = defineMessages({
+  publicGoalsHeader: {
+    id: 'app.home.publicGoalsHeader',
+    defaultMessage: "User's Goals",
+  },
+  noPublicGoals: {
+    id: 'app.home.noPublicGoals',
+    defaultMessage: "No user's goals posted",
+  },
+});
 
 const Home = () => {
   const [publicResponse, setPublicResponse] = useState<object[]>();
-  const [privateResponse, setPrivateResponse] = useState<object[]>();
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { formatMessage } = useIntl();
 
   const showGoal = (goal: any) => <p>{goal.text}</p>;
 
@@ -16,58 +26,16 @@ const Home = () => {
     })();
   }, []);
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      return;
-    }
-
-    (async () => {
-      try {
-        const accessToken = await getAccessTokenSilently({
-          authorizationParams: {
-            audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-          },
-        });
-
-        const authHeaders = {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        };
-
-        const privateGoals = await fetch('/api/private/goals', authHeaders);
-
-        setPrivateResponse(await privateGoals.json());
-
-        const userInfo = await fetch('/api/private/users/me', authHeaders);
-
-        console.log({ userInfo: await userInfo.json() });
-      } catch (e) {
-        console.warn(e);
-      }
-    })();
-  }, [getAccessTokenSilently, isAuthenticated]);
-
   return (
     <>
       <section>
-        <h2>Public</h2>
+        <h2>{formatMessage(messages.publicGoalsHeader)}</h2>
         {publicResponse && publicResponse.length > 0 ? (
           publicResponse?.map(showGoal)
         ) : (
-          <p>No public goals posted</p>
+          <p>{formatMessage(messages.noPublicGoals)}</p>
         )}
       </section>
-      {isAuthenticated && (
-        <section>
-          <h2>Private</h2>
-          {privateResponse && privateResponse.length > 0 ? (
-            privateResponse?.map(showGoal)
-          ) : (
-            <p>You have no published goals</p>
-          )}
-        </section>
-      )}
     </>
   );
 };
