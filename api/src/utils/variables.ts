@@ -10,3 +10,6 @@ export const AUTH0_MANAGEMENT_CLIENT_SECRET =
 export const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 export const OPENAI_ORGANIZATION_ID = process.env.OPENAI_ORGANIZATION_ID;
 export const LOCAL_DEV = process.env.LOCAL_DEV?.toLowerCase() === 'true';
+export const POSTGRES_USER = process.env.POSTGRES_USER ?? '';
+export const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD ?? '';
+export const POSTGRES_DB = process.env.POSTGRES_DB ?? '';
