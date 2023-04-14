@@ -4,7 +4,7 @@ import {
   AUTH0_MANAGEMENT_CLIENT_ID,
   AUTH0_MANAGEMENT_CLIENT_SECRET,
   AUTH0_MANAGEMENT_DOMAIN,
-} from '../../utils/environmentVariables';
+} from '../../utils/variables';
 
 const usersRouter = express.Router().get('/me', async (req, res) => {
   const auth0Management = new ManagementClient({

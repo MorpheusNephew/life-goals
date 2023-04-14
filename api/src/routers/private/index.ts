@@ -5,7 +5,7 @@ import {
   AUTH0_AUDIENCE,
   AUTH0_ISSUER_BASE_URL,
   AUTH0_TOKEN_SIGNING_ALG,
-} from '../../utils/environmentVariables';
+} from '../../utils/variables';
 import privateUsersRouter from './users';
 
 const jwtCheck = auth({

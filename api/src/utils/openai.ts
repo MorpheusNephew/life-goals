@@ -1,5 +1,5 @@
 import { Configuration, OpenAIApi } from 'openai';
-import { OPENAI_API_KEY, OPENAI_ORGANIZATION_ID } from './environmentVariables';
+import { OPENAI_API_KEY, OPENAI_ORGANIZATION_ID } from './variables';
 
 const configuration = new Configuration({
   organization: OPENAI_ORGANIZATION_ID,
