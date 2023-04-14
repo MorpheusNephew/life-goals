@@ -5,6 +5,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "docker run --name life-goals-local -e POSTGRES_USER=POSTY_USER -e POSTGRES_PASSWORD=POSTY_PASSWORD -e POSTGRES_DB=LIFE_GOALS -p 5432:5432 postgres:15.2"
+    "create-container": "docker container create --name life-goals-local -e POSTGRES_USER=POSTY_USER -e POSTGRES_PASSWORD=POSTY_PASSWORD -e POSTGRES_DB=LIFE_GOALS -p 5432:5432 postgres:15.2",
+    "start-container": "docker container start life-goals-local",
+    "stop-container": "docker container stop life-goals-local",
+    "remove-container": "docker container rm life-goals-local"
   }
 }
