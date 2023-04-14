@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { Goal, GoalDto, PostGoalDto, PutGoalDto } from '../types';
+import { Goal, GoalDto, PostGoalDto, PutGoalDto } from '../../types';
 
 export default class Goals {
   private static list: Goal[] = [];
