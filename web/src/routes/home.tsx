@@ -1,8 +1,9 @@
 import { defineMessages, useIntl } from 'react-intl';
-import { useLoaderData } from 'react-router-dom';
+import { LoaderFunction, useLoaderData } from 'react-router-dom';
+import { getAllPublicGoals } from '../services/api';
 
-export const loader = async () => {
-  const publicGoals = await (await fetch('/api/public/goals')).json();
+export const loader: LoaderFunction = async () => {
+  const publicGoals = await getAllPublicGoals();
 
   return { publicGoals };
 };

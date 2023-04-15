@@ -2,6 +2,8 @@ import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { useState, useEffect } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import Loading from '../components/loading';
+import { getUserGoals } from '../services/api';
+import { GoalDto } from '../services/api/types';
 
 const messages = defineMessages({
   personalGoalsHeader: {
@@ -17,7 +19,7 @@ const messages = defineMessages({
 const showGoal = (goal: any) => <p>{goal.text}</p>;
 
 const Goals = () => {
-  const [privateResponse, setPrivateResponse] = useState<object[]>();
+  const [goals, setGoals] = useState<GoalDto[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { formatMessage } = useIntl();
   const { getAccessTokenSilently } = useAuth0();
@@ -25,21 +27,9 @@ const Goals = () => {
   useEffect(() => {
     (async () => {
       try {
-        const accessToken = await getAccessTokenSilently({
-          authorizationParams: {
-            audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-          },
-        });
+        const privateGoals = await getUserGoals(getAccessTokenSilently)();
 
-        const authHeaders = {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        };
-
-        const privateGoals = await fetch('/api/private/goals', authHeaders);
-
-        setPrivateResponse(await privateGoals.json());
+        setGoals(privateGoals);
       } catch (e) {
         console.warn(e);
       } finally {
@@ -52,8 +42,8 @@ const Goals = () => {
       <h2>{formatMessage(messages.personalGoalsHeader)}</h2>
       {isLoading ? (
         <Loading />
-      ) : privateResponse && privateResponse.length > 0 ? (
-        privateResponse?.map(showGoal)
+      ) : goals && goals.length > 0 ? (
+        goals?.map(showGoal)
       ) : (
         <p>{formatMessage(messages.noPersonalGoals)}</p>
       )}
