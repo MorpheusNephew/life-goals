@@ -11,11 +11,11 @@ export const loader: LoaderFunction = async () => {
 const messages = defineMessages({
   publicGoalsHeader: {
     id: 'app.home.publicGoalsHeader',
-    defaultMessage: "All Public Goals",
+    defaultMessage: 'All Public Goals',
   },
   noPublicGoals: {
     id: 'app.home.noPublicGoals',
-    defaultMessage: "No public goals posted",
+    defaultMessage: 'No public goals posted',
   },
 });
 
@@ -23,7 +23,7 @@ const Home = () => {
   const { formatMessage } = useIntl();
   const { publicGoals } = useLoaderData() as { publicGoals: object[] };
 
-  const showGoal = (goal: any) => <p>{goal.text}</p>;
+  const showGoal = (goal: any) => <p key={goal.id}>{goal.text}</p>;
 
   return (
     <>
