@@ -13,8 +13,6 @@ interface LoaderResponse {
 }
 
 export const loader: LoaderFunction = ({ params: { goalId } }) => {
-  console.log({ goalId });
-
   const createNew = goalId === 'new';
 
   return { goalId: createNew ? undefined : goalId, createNew };
