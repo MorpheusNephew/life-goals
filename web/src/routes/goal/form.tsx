@@ -5,12 +5,13 @@ import {
   FormControlLabel,
   TextField,
 } from '@mui/material';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { GoalDto, PostGoalDto, PutGoalDto } from '../../services/api/types';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { createUserGoal, updateUserGoal } from '../../services/api';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
 
 const messages = defineMessages({
   goalText: {
@@ -48,12 +49,14 @@ type FormInput = PostGoalDto | PutGoalDto;
 const GoalForm: FC<GoalFormProps> = ({ goal }) => {
   const { formatMessage } = useIntl();
   const { getAccessTokenSilently } = useAuth0();
+  const [isSubmitting, setIsSubmitting] = useState<boolean>();
   const { register, handleSubmit } = useForm<FormInput>({
     defaultValues: {
       text: goal?.text ?? '',
       public: goal?.public ?? false,
     },
   });
+  const navigate = useNavigate();
 
   const saveGoal = goal
     ? (formInput: PutGoalDto) =>
@@ -61,8 +64,17 @@ const GoalForm: FC<GoalFormProps> = ({ goal }) => {
     : (formInput: PostGoalDto) =>
         createUserGoal(getAccessTokenSilently)(formInput);
 
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    saveGoal({ ...data, text: data.text.trim() });
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    setIsSubmitting(true);
+    try {
+      await saveGoal({ ...data, text: data.text.trim() });
+
+      navigate('/goals');
+    } catch (e) {
+      console.warn({ error: e });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -99,7 +111,7 @@ const GoalForm: FC<GoalFormProps> = ({ goal }) => {
         </>
       )}
       <Box>
-        <Button variant='contained' type='submit'>
+        <Button variant='contained' type='submit' disabled={isSubmitting}>
           {formatMessage(
             goal ? messages.goalUpdateButtonText : messages.goalCreateButtonText
           )}
