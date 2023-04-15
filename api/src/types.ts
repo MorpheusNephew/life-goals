@@ -6,8 +6,10 @@ export interface GoalDto {
   public?: boolean;
 }
 
-export type PostGoalDto = Omit<GoalDto, 'id' | 'createdDate'>;
+export type PostGoalDto = Pick<GoalDto, 'text' | 'public'>;
+export type PostGoal = Omit<GoalDto, 'id' | 'createdDate'>;
 export type PutGoalDto = PostGoalDto;
+export type PutGoal = PostGoal;
 
 export class Goal {
   id: string;

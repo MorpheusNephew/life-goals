@@ -28,7 +28,7 @@ const privateGoalsRouter = express
     const goalToCreate = req.body;
 
     const createdGoal = Goals.createGoal(
-      goalToCreate,
+      goalToCreate as any, // TODO: Update this the advice provided by ChatGPT
       currentUser
     ).toResource();
 
@@ -47,7 +47,7 @@ const privateGoalsRouter = express
     } else {
       const updatedGoal = Goals.updateGoal(
         goalId,
-        updatedGoalInfo
+        updatedGoalInfo as any // TODO: Update this the advice provided by ChatGPT if the text has changed
       ).toResource();
 
       res.json(updatedGoal);

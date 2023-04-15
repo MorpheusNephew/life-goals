@@ -1,10 +1,10 @@
 import { randomUUID } from 'crypto';
-import { Goal, GoalDto, PostGoalDto, PutGoalDto } from '../../types';
+import { Goal, GoalDto, PostGoal, PutGoal } from '../../types';
 
 export default class Goals {
   private static list: Goal[] = [];
 
-  static createGoal(goalToCreate: PostGoalDto, creator: string) {
+  static createGoal(goalToCreate: PostGoal, creator: string) {
     const createdGoal = new Goal({
       ...goalToCreate,
       createdDate: Date.now().toString(),
@@ -31,7 +31,7 @@ export default class Goals {
     return Goals.list.find((goal) => goal.id === goalId);
   }
 
-  static updateGoal(goalId: string, updatedGoalInfo: PutGoalDto) {
+  static updateGoal(goalId: string, updatedGoalInfo: PutGoal) {
     const goalIndex = Goals.list.findIndex((goal) => goal.id === goalId);
 
     if (goalIndex < 0) {
