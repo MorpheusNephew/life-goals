@@ -1,6 +1,6 @@
 export interface GoalDto {
   id: string;
-  createdDate: string;
+  createdDate: Date;
   text: string;
   advice: string;
   public?: boolean;

@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 const messages = defineMessages({
   goalText: {
     id: 'app.goal.form.goalText',
-    defaultMessage: 'Your goal prompt',
+    defaultMessage: 'Your goal',
   },
   goalPublic: {
     id: 'app.goal.form.goalPublic',
@@ -47,7 +47,7 @@ interface GoalFormProps {
 type FormInput = PostGoalDto | PutGoalDto;
 
 const GoalForm: FC<GoalFormProps> = ({ goal }) => {
-  const { formatMessage } = useIntl();
+  const { formatMessage, formatDate } = useIntl();
   const { getAccessTokenSilently } = useAuth0();
   const [isSubmitting, setIsSubmitting] = useState<boolean>();
   const { register, handleSubmit } = useForm<FormInput>({
@@ -98,12 +98,13 @@ const GoalForm: FC<GoalFormProps> = ({ goal }) => {
             <TextField
               value={goal.advice}
               label={formatMessage(messages.goalAdvice)}
+              fullWidth
               disabled
             />
           </Box>
           <Box>
             <TextField
-              value={goal.createdDate}
+              value={formatDate(goal.createdDate, { dateStyle: 'full' })}
               label={formatMessage(messages.goalCreated)}
               disabled
             />

@@ -7,7 +7,7 @@ export default class Goals {
   static createGoal(goalToCreate: PostGoal, creator: string) {
     const createdGoal = new Goal({
       ...goalToCreate,
-      createdDate: Date.now().toString(),
+      createdDate: new Date(),
       id: randomUUID(),
       creator,
     });
