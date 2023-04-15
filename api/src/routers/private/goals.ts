@@ -32,7 +32,7 @@ const privateGoalsRouter = express
       currentUser
     ).toResource();
 
-    res.json(createdGoal);
+    res.status(201).json(createdGoal);
   })
   .put('/:goalId', (req: Request<{ goalId: string }, {}, PutGoalDto>, res) => {
     const goalId = req.params.goalId;
