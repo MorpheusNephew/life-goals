@@ -1,8 +1,16 @@
-import { Box, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+} from '@mui/material';
 import { FC } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import { GoalDto } from '../../services/api/types';
+import { GoalDto, PostGoalDto, PutGoalDto } from '../../services/api/types';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { createUserGoal, updateUserGoal } from '../../services/api';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const messages = defineMessages({
   goalText: {
@@ -21,25 +29,44 @@ const messages = defineMessages({
     id: 'app.goal.form.goalCreated',
     defaultMessage: 'Created',
   },
+  goalCreateButtonText: {
+    id: 'app.goal.form.goalCreateButtonText',
+    defaultMessage: 'Create',
+  },
+  goalUpdateButtonText: {
+    id: 'app.goal.form.goalUpdateButtonText',
+    defaultMessage: 'Update',
+  },
 });
 
 interface GoalFormProps {
   goal?: GoalDto;
 }
 
-type FormInput = Pick<GoalDto, 'text' | 'public'>;
+type FormInput = PostGoalDto | PutGoalDto;
 
 const GoalForm: FC<GoalFormProps> = ({ goal }) => {
   const { formatMessage } = useIntl();
-  const { register } = useForm<FormInput>({
+  const { getAccessTokenSilently } = useAuth0();
+  const { register, handleSubmit } = useForm<FormInput>({
     defaultValues: {
       text: goal?.text ?? '',
       public: goal?.public ?? false,
     },
   });
 
+  const saveGoal = goal
+    ? (formInput: PutGoalDto) =>
+        updateUserGoal(getAccessTokenSilently)(goal.id, formInput)
+    : (formInput: PostGoalDto) =>
+        createUserGoal(getAccessTokenSilently)(formInput);
+
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
+    saveGoal(data);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Box>
         <TextField
           {...register('text', { required: true })}
@@ -71,6 +98,13 @@ const GoalForm: FC<GoalFormProps> = ({ goal }) => {
           </Box>
         </>
       )}
+      <Box>
+        <Button variant='contained' type='submit'>
+          {formatMessage(
+            goal ? messages.goalUpdateButtonText : messages.goalCreateButtonText
+          )}
+        </Button>
+      </Box>
     </form>
   );
 };
