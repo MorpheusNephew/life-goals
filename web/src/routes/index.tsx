@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Home, { loader as homeLoader } from './home';
 import Root from './root';
 import Goals from './goals';
+import Goal, { loader as goalLoader } from './goal';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,11 @@ const router = createBrowserRouter([
       {
         path: 'goals',
         element: <Goals />,
+      },
+      {
+        path: 'goals/:goalId',
+        loader: goalLoader,
+        element: <Goal />,
       },
     ],
   },
