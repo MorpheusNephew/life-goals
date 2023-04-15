@@ -8,7 +8,7 @@ import { GoalDto } from '../services/api/types';
 const messages = defineMessages({
   personalGoalsHeader: {
     id: 'app.goals.personalGoalsHeader',
-    defaultMessage: 'Your Personal Goals',
+    defaultMessage: 'Personal Goals',
   },
   noPersonalGoals: {
     id: 'app.goals.noPersonalGoals',

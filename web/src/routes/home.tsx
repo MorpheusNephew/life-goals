@@ -11,11 +11,11 @@ export const loader: LoaderFunction = async () => {
 const messages = defineMessages({
   publicGoalsHeader: {
     id: 'app.home.publicGoalsHeader',
-    defaultMessage: "User's Goals",
+    defaultMessage: "All Public Goals",
   },
   noPublicGoals: {
     id: 'app.home.noPublicGoals',
-    defaultMessage: "No user's goals posted",
+    defaultMessage: "No public goals posted",
   },
 });
 

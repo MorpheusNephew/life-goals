@@ -15,7 +15,7 @@ const messages = defineMessages({
   },
   goalsLink: {
     id: 'app.header.goalsLink',
-    defaultMessage: 'Your Goals',
+    defaultMessage: 'Personal Goals',
     description: 'Link to goals page',
   },
 });
