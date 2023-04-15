@@ -62,7 +62,7 @@ const GoalForm: FC<GoalFormProps> = ({ goal }) => {
         createUserGoal(getAccessTokenSilently)(formInput);
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    saveGoal(data);
+    saveGoal({ ...data, text: data.text.trim() });
   };
 
   return (
