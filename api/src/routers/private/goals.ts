@@ -1,6 +1,7 @@
 import express, { Request } from 'express';
 import Goals from '../../models/goals';
 import { PostGoalDto, PutGoalDto } from '../../types';
+import { getGoalAdvice } from '../../utils/openai';
 
 const privateGoalsRouter = express
   .Router()
@@ -23,12 +24,14 @@ const privateGoalsRouter = express
       res.json(goal.toResource());
     }
   })
-  .post('/', (req: Request<{}, {}, PostGoalDto>, res) => {
+  .post('/', async (req: Request<{}, {}, PostGoalDto>, res) => {
     const currentUser = req.auth?.payload.sub!;
     const goalToCreate = req.body;
 
+    const advice = await getGoalAdvice(goalToCreate.text);
+
     const createdGoal = Goals.createGoal(
-      goalToCreate as any, // TODO: Update this the advice provided by ChatGPT
+      { ...goalToCreate, advice },
       currentUser
     ).toResource();
 
@@ -45,10 +48,10 @@ const privateGoalsRouter = express
     } else if (goal.creator !== currentUser) {
       res.sendStatus(403);
     } else {
-      const updatedGoal = Goals.updateGoal(
-        goalId,
-        updatedGoalInfo as any // TODO: Update this the advice provided by ChatGPT if the text has changed
-      ).toResource();
+      const updatedGoal = Goals.updateGoal(goalId, {
+        ...goal,
+        ...updatedGoalInfo,
+      }).toResource();
 
       res.json(updatedGoal);
     }
