@@ -7,9 +7,9 @@ const Root = () => {
     <Box sx={{ display: 'flex' }}>
       <AppBar
         position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, textAlign: 'center', paddingBottom: 1, paddingTop: 1 }}
       >
-        More magic
+        Life Goals
       </AppBar>
       <Drawer
         variant="permanent"
