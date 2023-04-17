@@ -4,7 +4,7 @@ This is an app about starting small. What exactly does that mean? It means think
 
 - [Small Things web app](#small-things-web-app)
   - [This app](#this-app)
-  - [My Life Log](#my-life-log)
+  - [My Current Life Goals](#my-current-life-goals)
     - [Career](#career)
     - [Personal](#personal)
       - [Body](#body)
@@ -15,14 +15,14 @@ This is an app about starting small. What exactly does that mean? It means think
 
 Right now this app will just take notes of that I want to accomplish, but the actual purpose is to use different aspects of the things that I want to do career wise.
 
-## My Life Log
+## My Current Life Goals
 
 ### Career
 
 - Become proficient in different programming languages (Rust, Go)
 - Be able to create a layout for a webpage using css (grid and flexbox)
 - Learn different frameworks (NextJS and NestJS)
-- Microservices architecture (message passing using RabbitMQ and/or other message passing technologies like AWS SQS)
+- Micro-services architecture (message passing using RabbitMQ and/or other message passing technologies like AWS SQS)
 
 ### Personal
 
