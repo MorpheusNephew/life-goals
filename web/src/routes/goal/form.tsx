@@ -1,7 +1,9 @@
 import {
+  Backdrop,
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
   TextField,
 } from '@mui/material';
@@ -49,7 +51,7 @@ type FormInput = PostGoalDto | PutGoalDto;
 const GoalForm: FC<GoalFormProps> = ({ goal }) => {
   const { formatMessage, formatDate } = useIntl();
   const { getAccessTokenSilently } = useAuth0();
-  const [isSubmitting, setIsSubmitting] = useState<boolean>();
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const { register, handleSubmit } = useForm<FormInput>({
     defaultValues: {
       text: goal?.text ?? '',
@@ -67,9 +69,13 @@ const GoalForm: FC<GoalFormProps> = ({ goal }) => {
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     setIsSubmitting(true);
     try {
-      await saveGoal({ ...data, text: data.text.trim() });
+      const returnedGoal = await saveGoal({ ...data, text: data.text.trim() });
 
-      navigate('/goals');
+      if (goal) {
+        navigate('/goals');
+      } else {
+        navigate(`/goals/${returnedGoal.id}`);
+      }
     } catch (e) {
       console.warn({ error: e });
     } finally {
@@ -78,47 +84,59 @@ const GoalForm: FC<GoalFormProps> = ({ goal }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Box>
-        <TextField
-          {...register('text', { required: true })}
-          label={formatMessage(messages.goalText)}
-          fullWidth
-        />
-      </Box>
-      <Box>
-        <FormControlLabel
-          control={<Checkbox {...register('public')} />}
-          label={formatMessage(messages.goalPublic)}
-        />
-      </Box>
-      {goal && (
-        <>
-          <Box>
-            <TextField
-              value={goal.advice}
-              label={formatMessage(messages.goalAdvice)}
-              fullWidth
-              disabled
-            />
-          </Box>
-          <Box>
-            <TextField
-              value={formatDate(goal.createdDate, { dateStyle: 'full' })}
-              label={formatMessage(messages.goalCreated)}
-              disabled
-            />
-          </Box>
-        </>
-      )}
-      <Box>
-        <Button variant='contained' type='submit' disabled={isSubmitting}>
-          {formatMessage(
-            goal ? messages.goalUpdateButtonText : messages.goalCreateButtonText
-          )}
-        </Button>
-      </Box>
-    </form>
+    <>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isSubmitting}
+      >
+        <CircularProgress color='inherit' />
+      </Backdrop>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box>
+          <TextField
+            {...register('text', { required: true })}
+            label={formatMessage(messages.goalText)}
+            fullWidth
+          />
+        </Box>
+        <Box>
+          <FormControlLabel
+            control={<Checkbox {...register('public')} />}
+            label={formatMessage(messages.goalPublic)}
+          />
+        </Box>
+        {goal && (
+          <>
+            <Box>
+              <TextField
+                value={goal.advice}
+                label={formatMessage(messages.goalAdvice)}
+                sx={{ textOverflow: 'ellipsis' }}
+                fullWidth
+                disabled
+              />
+              <p>{goal.advice}</p>
+            </Box>
+            <Box>
+              <TextField
+                value={formatDate(goal.createdDate, { dateStyle: 'full' })}
+                label={formatMessage(messages.goalCreated)}
+                disabled
+              />
+            </Box>
+          </>
+        )}
+        <Box>
+          <Button variant='contained' type='submit' disabled={isSubmitting}>
+            {formatMessage(
+              goal
+                ? messages.goalUpdateButtonText
+                : messages.goalCreateButtonText
+            )}
+          </Button>
+        </Box>
+      </form>
+    </>
   );
 };
 

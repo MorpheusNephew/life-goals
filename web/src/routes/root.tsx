@@ -1,18 +1,32 @@
 import Header from '../components/header';
 import { Outlet } from 'react-router-dom';
-import { AppBar, Box, Container, Drawer, Toolbar } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Container,
+  Drawer,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 
 const Root = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar
-        position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, textAlign: 'center', paddingBottom: 1, paddingTop: 1 }}
+        position='fixed'
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          textAlign: 'center',
+          paddingBottom: 1,
+          paddingTop: 1,
+        }}
       >
-        Life Goals
+        <Typography variant='h6' component='h2'>
+          Life Goals
+        </Typography>
       </AppBar>
       <Drawer
-        variant="permanent"
+        variant='permanent'
         sx={{
           width: 240,
           flexShrink: 0,
