@@ -1,5 +1,5 @@
 import { Goal, GoalDto, PostGoal, PutGoal } from '../../types';
-import DiskGoals from './disk';
+import MongoGoals from './mongodb';
 
 export interface IGoals {
   createGoal(goalToCreate: PostGoal, creator: string): Promise<Goal>;
@@ -8,13 +8,13 @@ export interface IGoals {
 
   getAllGoals(publicGoals: boolean, creator?: string): Promise<Goal[]>;
 
-  getGoal(goalId: string): Promise<Goal | undefined>;
+  getGoal(goalId: string): Promise<Goal | undefined | null>;
 
   updateGoal(goalId: string, updatedGoalInfo: PutGoal): Promise<Goal>;
 
   toResource(goal: Goal): GoalDto;
 }
 
-const Goals = new DiskGoals();
+const Goals = new MongoGoals();
 
 export default Goals;

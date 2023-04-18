@@ -39,7 +39,7 @@ export default class DiskGoals implements IGoals {
     );
   }
 
-  getGoal(goalId: string): Promise<Goal | undefined> {
+  getGoal(goalId: string): Promise<Goal | undefined | null> {
     return Promise.resolve(this.list.find((goal) => goal.id === goalId));
   }
 
