@@ -5,16 +5,16 @@ import { getGoalAdvice } from '../../utils/openai';
 
 const privateGoalsRouter = express
   .Router()
-  .get('/', (req, res) => {
+  .get('/', async (req, res) => {
     res.json(
-      Goals.getAllGoals(false, req.auth?.payload.sub).map((goal) =>
+      (await Goals.getAllGoals(false, req.auth?.payload.sub)).map((goal) =>
         goal.toResource()
       )
     );
   })
-  .get('/:goalId', (req, res) => {
+  .get('/:goalId', async (req, res) => {
     const currentUser = req.auth?.payload.sub!;
-    const goal = Goals.getGoal(req.params.goalId);
+    const goal = await Goals.getGoal(req.params.goalId);
 
     if (!goal) {
       res.sendStatus(404);
@@ -30,36 +30,40 @@ const privateGoalsRouter = express
 
     const advice = await getGoalAdvice(goalToCreate.text);
 
-    const createdGoal = Goals.createGoal(
-      { ...goalToCreate, advice },
-      currentUser
+    const createdGoal = (
+      await Goals.createGoal({ ...goalToCreate, advice }, currentUser)
     ).toResource();
 
     res.status(201).json(createdGoal);
   })
-  .put('/:goalId', (req: Request<{ goalId: string }, {}, PutGoalDto>, res) => {
-    const goalId = req.params.goalId;
-    const currentUser = req.auth?.payload.sub!;
-    const goal = Goals.getGoal(goalId);
-    const updatedGoalInfo = req.body;
+  .put(
+    '/:goalId',
+    async (req: Request<{ goalId: string }, {}, PutGoalDto>, res) => {
+      const goalId = req.params.goalId;
+      const currentUser = req.auth?.payload.sub!;
+      const goal = await Goals.getGoal(goalId);
+      const updatedGoalInfo = req.body;
 
-    if (!goal) {
-      res.sendStatus(404);
-    } else if (goal.creator !== currentUser) {
-      res.sendStatus(403);
-    } else {
-      const updatedGoal = Goals.updateGoal(goalId, {
-        ...goal,
-        ...updatedGoalInfo,
-      }).toResource();
+      if (!goal) {
+        res.sendStatus(404);
+      } else if (goal.creator !== currentUser) {
+        res.sendStatus(403);
+      } else {
+        const updatedGoal = (
+          await Goals.updateGoal(goalId, {
+            ...goal,
+            ...updatedGoalInfo,
+          })
+        ).toResource();
 
-      res.json(updatedGoal);
+        res.json(updatedGoal);
+      }
     }
-  })
-  .delete('/:goalId', (req, res) => {
+  )
+  .delete('/:goalId', async (req, res) => {
     const goalId = req.params.goalId;
     const currentUser = req.auth?.payload.sub!;
-    const goal = Goals.getGoal(goalId);
+    const goal = await Goals.getGoal(goalId);
 
     if (!goal) {
       res.sendStatus(404);
