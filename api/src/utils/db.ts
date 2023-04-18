@@ -1,32 +1,17 @@
-import { Sequelize } from 'sequelize';
-import {
-  LOCAL_DEV,
-  POSTGRES_DB,
-  POSTGRES_PASSWORD,
-  POSTGRES_USER,
-} from './variables';
+import { LOCAL_DEV } from './variables';
+import { connect } from 'mongoose';
 
-const initializeLocalPostgres = async () => {
-  const sequelize = new Sequelize(
-    POSTGRES_DB,
-    POSTGRES_USER,
-    POSTGRES_PASSWORD,
-    {
-      host: 'localhost',
-      dialect: 'postgres',
-    }
-  );
-
+const initializeMongoose = async () => {
   try {
-    await sequelize.authenticate();
-    console.log('Connected to postgres');
+    await connect('mongodb://127.0.0.1:27017/life_goals');
+    console.log('Connected to Mongodb');
   } catch (e) {
-    console.error('Unable to connect to postgres', { error: e });
+    console.error('Unable to connect to Mongodb', { error: e });
   }
 };
 
 export const initializeDb = async () => {
   if (LOCAL_DEV) {
-    await initializeLocalPostgres();
+    await initializeMongoose();
   }
 };
