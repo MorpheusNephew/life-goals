@@ -36,11 +36,11 @@ export default class MongoGoals implements IGoals {
     publicGoals: boolean,
     creator?: string | undefined
   ): Promise<Goal[]> {
-    return (
-      publicGoals
-        ? await GoalModel.find({ public: true }).sort('-createdDate')
-        : await GoalModel.find({ creator }).sort('-createdDate')
-    ).map((goal) => new Goal(goal.toObject()));
+    const findCriteria = publicGoals ? { public: true } : { creator };
+
+    return (await GoalModel.find(findCriteria).sort('-createdDate')).map(
+      (goal) => new Goal(goal.toObject())
+    );
   }
 
   async getGoal(goalId: string): Promise<Goal | undefined | null> {
