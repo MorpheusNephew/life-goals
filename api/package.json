@@ -4,6 +4,7 @@
   "description": "GraphQL server that will handle all communications with back-end services",
   "main": "index.js",
   "author": "Jelani Jackson",
+  "type": "module",
   "license": "MIT",
   "private": true,
   "scripts": {
