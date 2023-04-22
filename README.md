@@ -1,39 +1,23 @@
-# Small Things web app
+# Life Goals
 
-This is an app about starting small. What exactly does that mean? It means thinking about what you want and working towards achieving that. The key to that is knowing what you want. So first things first, what are all of the things that I want? Well, let's see.
+Creating an app centered around Life Goals
 
-- [Small Things web app](#small-things-web-app)
-  - [This app](#this-app)
-  - [My Current Life Goals](#my-current-life-goals)
-    - [Career](#career)
-    - [Personal](#personal)
-      - [Body](#body)
-      - [Relationships](#relationships)
-      - [Language learning](#language-learning)
+- [Life Goals](#life-goals)
+  - [Purpose](#purpose)
+  - [Tech used](#tech-used)
 
-## This app
+## Purpose
 
-Right now this app will just take notes of that I want to accomplish, but the actual purpose is to use different aspects of the things that I want to do career wise.
+The purpose of working on this app is to work on some skills that I might not have used in a while and to sharpen the ones that I currently have
 
-## My Current Life Goals
+## Tech used
 
-### Career
+This will continue to be updated as I continue to work on it, but the current tech/frameworks/etc... used are as follows
 
-- Become proficient in different programming languages (Rust, Go)
-- Be able to create a layout for a webpage using css (grid and flexbox)
-- Learn different frameworks (NextJS and NestJS)
-- Micro-services architecture (message passing using RabbitMQ and/or other message passing technologies like AWS SQS)
-
-### Personal
-
-#### Body
-
-- Drop my body fat percentage to low teens (this is tough with out a dexa scan or one of the body fat monitors) or lower body weight to sub low 190s
-
-#### Relationships
-
-- Grow my social network to have people that I can hangout/grow with which can also work in that love/significant other category
-
-#### Language learning
-
-- Become proficient at Spanish and then start to learn French
+- [Auth0](https://auth0.com/) to handle all things auth related
+- Web uses [React](https://react.dev/) with [Typescript](https://www.typescriptlang.org/) using [Material UI](https://mui.com/)
+- API uses [Express](https://expressjs.com/) with [Typescript](https://www.typescriptlang.org/)
+- [ChatGPT](https://platform.openai.com/) to generate the "Advice" for the Life Goals
+- For local development I'm using [MongoDB](https://www.mongodb.com/) via [Docker](https://hub.docker.com/_/mongo) for data storage
+- When deployed the app will use [AWS DynamoDB](https://aws.amazon.com/dynamodb/)
+- [Jest](https://jestjs.io/) (when I add unit tests)
