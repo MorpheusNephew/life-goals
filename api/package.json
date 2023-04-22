@@ -8,14 +8,12 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist && rimraf terraform/resources",
+    "clean": "rimraf dist",
     "copyPackageJson": "cpy package.json dist",
-    "copyToTerraform": "cd dist && cpy * ../terraform/resources/api && cd ..",
-    "installProd": "cd terraform/resources/api && yarn install --prod && cd ../../..",
+    "installProd": "yarn install --prod",
     "prebuild": "yarn clean",
     "build": "tsc --project tsconfig.build.json",
-    "postbuild": "yarn copyPackageJson && yarn copyToTerraform && yarn installProd",
-    "plan": "yarn build && cd terraform && terraform plan && cd ..",
+    "postbuild": "yarn copyPackageJson && cd dist && yarn installProd && cd ..",
     "start": "ts-node -r dotenv/config ./src/index.ts",
     "test": "jest",
     "watch": "nodemon --exec \"yarn start\" --watch ./src -e .ts"
