@@ -42,9 +42,8 @@
     "express-oauth2-jwt-bearer": "^1.4.0",
     "mongoose": "^7.0.4",
     "openai": "^3.2.1",
+    "superagent-proxy": "^3.0.0",
     "winston": "^3.8.2"
   },
-  "peerDependencies": {
-    "superagent-proxy": "^3.0.0"
-  }
+  "peerDependencies": {}
 }
