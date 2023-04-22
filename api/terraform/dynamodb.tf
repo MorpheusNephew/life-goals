@@ -23,5 +23,6 @@ resource "aws_dynamodb_table" "life_goals_db" {
     name = "PublicCreatedDateIndex"
     hash_key = "pubic"
     range_key = "createdDate"
+    projection_type = "ALL"
   }
 }
