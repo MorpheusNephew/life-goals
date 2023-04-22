@@ -20,9 +20,8 @@ resource "aws_dynamodb_table" "life_goals_db" {
   }
 
   global_secondary_index {
-    name = "PublicCreatedDateIndex"
-    hash_key = "pubic"
-    range_key = "createdDate"
+    name = "CreatedDateIndex"
+    hash_key = "createdDate"
     projection_type = "ALL"
   }
 }
