@@ -31,11 +31,11 @@ jobs:
         run: |
           yarn install
           yarn build
-      - name: Upload artifacts
+      - name: Upload api lambda file
         uses: actions/upload-artifact@v3
         with:
-          name: api_lambda
-          path: api/dist/index.js
+          name: api_lambda_file
+          path: api/dist/api_lambda.js
 
   terraformn:
     name: terraform
@@ -68,10 +68,10 @@ jobs:
         id: validate
         run: terraform validate -no-color
 
-      - name: Download api dir
+      - name: Download api lambda file
         uses: actions/download-artifact@v3
         with:
-          name: api_lambda
+          name: api_lambda_file
           path: api/terraform/resources/api_lambda.js
 
       - name: Terraform Plan
