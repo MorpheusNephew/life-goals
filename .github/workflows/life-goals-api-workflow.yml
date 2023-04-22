@@ -1,4 +1,4 @@
-name: Life Goals API
+name: Life Goals API Deployment
 defaults:
   run:
     working-directory: api
