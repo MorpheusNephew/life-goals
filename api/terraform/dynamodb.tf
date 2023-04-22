@@ -14,11 +14,6 @@ resource "aws_dynamodb_table" "life_goals_db" {
     type = "S"
   }
 
-  attribute {
-    name = "public"
-    type = "BOOL"
-  }
-
   global_secondary_index {
     name = "CreatedDateIndex"
     hash_key = "createdDate"
