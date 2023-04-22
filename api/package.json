@@ -8,16 +8,17 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist && rimraf resources",
+    "clean": "rimraf dist && rimraf terraform/resources",
     "copyPackageJson": "cpy package.json dist",
-    "installProd": "yarn install --prod",
+    "copyToTerraform": "cd dist && cpy * ../terraform/resources/api && cd ..",
+    "installProd": "cd terraform/resources/api && yarn install --prod && cd ../../..",
     "prebuild": "yarn clean",
     "build": "tsc --project tsconfig.build.json",
-    "postbuild": "yarn copyPackageJson && cd dist && yarn installProd && yarn zipLambda && cd ..",
+    "postbuild": "yarn copyPackageJson && yarn copyToTerraform && yarn installProd",
+    "plan": "yarn build && cd terraform && terraform plan && cd ..",
     "start": "ts-node -r dotenv/config ./src/index.ts",
     "test": "jest",
-    "watch": "nodemon --exec \"yarn start\" --watch ./src -e .ts",
-    "zipLambda": "bestzip ../terraform/resources/api.zip *"
+    "watch": "nodemon --exec \"yarn start\" --watch ./src -e .ts"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",
