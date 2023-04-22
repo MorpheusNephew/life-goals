@@ -5,12 +5,12 @@ defaults:
 on:
   push:
     paths:
-      - api/**/**
+      - api/**
     branches:
       - main
   pull_request:
     paths:
-      - api/**/**
+      - api/**
 jobs:
   api-tests:
     runs-on: ubuntu-latest
