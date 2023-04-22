@@ -20,6 +20,7 @@ jobs:
     defaults:
       run:
         working-directory: api/terraform
+    if: ${{ jobs.api-tests.result }} == 'success'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
