@@ -8,9 +8,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf dist terraform/resources",
     "prebuild": "yarn clean",
     "build": "tsc && esbuild src/index.ts --platform=node --bundle --outfile=dist/api_lambda.js",
+    "postbuild": "mkdir -p terraform/resources && cd dist && bestzip ../terraform/resources/api_lambda.js.zip * && cd ..",
     "start": "ts-node -r dotenv/config ./src/index.ts",
     "test": "jest",
     "watch": "nodemon --exec \"yarn start\" --watch ./src -e .ts"

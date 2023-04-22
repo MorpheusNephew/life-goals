@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: api_lambda_file
-          path: api/dist/api_lambda.js
+          path: api/terraform/resources/api_lambda.js.zip
 
   terraformn:
     name: terraform
@@ -72,7 +72,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: api_lambda_file
-          path: api/terraform/resources/api_lambda.js
+          path: api/terraform/resources/api_lambda.js.zip
 
       - name: Terraform Plan
         id: plan
