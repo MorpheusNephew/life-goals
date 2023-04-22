@@ -1,26 +1,32 @@
-name: Life Goals API Deployment
+name: Life Goals API
 defaults:
   run:
     working-directory: api
 on:
-  workflow_run:
-    workflows: [Life Goals API tests]
-    types:
-      - completed
   push:
     branches:
       - main
   pull_request:
 jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test API
+        run: |
+          yarn install
+          yarn test
+
   terraformn:
     name: Terraform
     runs-on: ubuntu-latest
+    needs: api-tests
     permissions:
       pull-requests: write
     defaults:
       run:
         working-directory: api/terraform
-    if: ${{ jobs.api-tests.result }} == 'success'
+    if: ${{ needs.api-tests.result }} == 'success'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
