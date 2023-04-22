@@ -1,12 +1,12 @@
 terraform {
-  backend "remote" {
-    hostname     = "app.terraform.io"
+  cloud {
     organization = "morpheusnephew"
 
     workspaces {
-      name = "life-goals"
+      name = "life-goals-api"
     }
   }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
