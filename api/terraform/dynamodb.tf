@@ -1,7 +1,6 @@
 resource "aws_dynamodb_table" "life_goals_db" {
   name         = "life-goals-db"
   hash_key     = "userId"
-  range_key    = "createdDate"
   billing_mode = "PAY_PER_REQUEST"
 
   attribute {
@@ -10,13 +9,13 @@ resource "aws_dynamodb_table" "life_goals_db" {
   }
 
   attribute {
-    name = "createdDate"
+    name = "publicCreatedDate"
     type = "S"
   }
 
   global_secondary_index {
-    name = "CreatedDateIndex"
-    hash_key = "createdDate"
+    name            = "PublicCreatedDateIndex"
+    hash_key        = "publicCreatedDate"
     projection_type = "ALL"
   }
 }
