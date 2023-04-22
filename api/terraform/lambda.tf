@@ -24,7 +24,6 @@ resource "aws_lambda_function" "api_lambda_function" {
   function_name = "life_goals_api"
   filename      = local.api_lambda_file_path
   role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "index.js"
-
-  runtime = "nodejs18.x"
+  handler       = "api_lambda.handler"
+  runtime       = "nodejs18.x"
 }
