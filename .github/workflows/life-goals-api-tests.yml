@@ -2,7 +2,7 @@ name: Life Goals API tests
 defaults:
   run:
     working-directory: api
-on: [push, pull_request]
+on: push
 jobs:
   api-tests:
     runs-on: ubuntu-latest
