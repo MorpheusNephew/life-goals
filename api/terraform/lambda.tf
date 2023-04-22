@@ -18,14 +18,14 @@ resource "aws_iam_role" "iam_for_lambda" {
 
 data "archive_file" "api_files" {
   type        = "zip"
-  output_path = "${path.module}/resources/api.zip"
+  output_path = "${path.root}/resources/api.zip"
 
-  source_dir = "${path.module}/resources/api"
+  source_dir = "${path.root}/resources/api"
 }
 
 resource "aws_lambda_function" "api_lambda_function" {
   function_name = "life_goals_api"
-  filename      = "${path.module}/resources/api.zip"
+  filename      = "${path.root}/resources/api.zip"
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "index.js"
 
