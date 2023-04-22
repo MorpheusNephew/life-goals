@@ -8,6 +8,10 @@ await initializeDb();
 
 app.use('/api', routers);
 
+export const handler = () => {
+  console.log("What's up");
+};
+
 app.listen(port, async () => {
   console.log(`Listening on http://localhost:${port}`);
 });
