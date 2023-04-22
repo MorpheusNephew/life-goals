@@ -3,6 +3,10 @@ defaults:
   run:
     working-directory: api
 on:
+  workflow_run:
+    workflows: [Life Goals API tests]
+    types:
+      - completed
   push:
     branches:
       - main
