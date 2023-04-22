@@ -26,7 +26,7 @@ resource "aws_lambda_function" "api_lambda_function" {
   function_name = "life_goals_api"
   filename      = "${path.module}/resources/api_lambda.js.zip"
   role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "index.js"
+  handler       = "api_lambda.handler"
 
   source_code_hash = data.archive_file.api_lambda_file.output_base64sha256
 
