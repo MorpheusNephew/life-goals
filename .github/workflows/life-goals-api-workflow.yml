@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: api_dir
-          path: dist
+          path: api/dist
 
   terraformn:
     name: terraform
@@ -72,7 +72,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: api_dir
-          path: resources/api
+          path: api/terraform/resources/api
 
       - name: Terraform Plan
         id: plan
