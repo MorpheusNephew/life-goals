@@ -19,8 +19,7 @@ resource "aws_iam_role" "iam_for_lambda" {
 data "archive_file" "api_files" {
   type        = "zip"
   output_path = "${path.module}/resources/api.zip"
-
-  source_dir = "${path.module}/resources/api"
+  source_file = "${path.module}/resources/api_lambda.js"
 }
 
 resource "aws_lambda_function" "api_lambda_function" {

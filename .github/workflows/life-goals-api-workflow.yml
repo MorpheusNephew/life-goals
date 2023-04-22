@@ -34,8 +34,8 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: api_dir
-          path: api/dist
+          name: api_lambda
+          path: api/dist/index.js
 
   terraformn:
     name: terraform
@@ -71,8 +71,8 @@ jobs:
       - name: Download api dir
         uses: actions/download-artifact@v3
         with:
-          name: api_dir
-          path: api/terraform/resources/api
+          name: api_lambda
+          path: api/terraform/resources/api_lambda.js
 
       - name: Terraform Plan
         id: plan
