@@ -16,20 +16,14 @@ resource "aws_iam_role" "iam_for_lambda" {
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
-data "archive_file" "api_files" {
-  type        = "zip"
-  output_path = "${path.module}/resources/api.zip"
-
-  source_dir = "${path.module}/resources/api"
+locals {
+  api_lambda_file_path = "${path.module}/resources/api_lambda.js.zip"
 }
 
 resource "aws_lambda_function" "api_lambda_function" {
   function_name = "life_goals_api"
-  filename      = "${path.module}/resources/api.zip"
+  filename      = local.api_lambda_file_path
   role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "index.js"
-
-  source_code_hash = data.archive_file.api_files.output_base64sha256
-
-  runtime = "nodejs18.x"
+  handler       = "api_lambda.handler"
+  runtime       = "nodejs18.x"
 }
