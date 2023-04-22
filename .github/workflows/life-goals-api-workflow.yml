@@ -1,4 +1,4 @@
-name: Life Goals API Pull Request
+name: Life Goals API
 defaults:
   run:
     working-directory: api
