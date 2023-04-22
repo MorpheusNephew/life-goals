@@ -24,58 +24,35 @@ const messages = defineMessages({
     id: 'app.goal.form.goalPublic',
     defaultMessage: 'Public',
   },
-  goalAdvice: {
-    id: 'app.goal.form.goalAdvice',
-    defaultMessage: '"Advice" (Provided by ChatGPT)',
-  },
-  goalCreated: {
-    id: 'app.goal.form.goalCreated',
-    defaultMessage: 'Created',
-  },
   goalCreateButtonText: {
     id: 'app.goal.form.goalCreateButtonText',
     defaultMessage: 'Create',
   },
-  goalUpdateButtonText: {
-    id: 'app.goal.form.goalUpdateButtonText',
-    defaultMessage: 'Update',
-  },
 });
-
-interface GoalFormProps {
-  goal?: GoalDto;
-}
 
 type FormInput = PostGoalDto | PutGoalDto;
 
-const GoalForm: FC<GoalFormProps> = ({ goal }) => {
-  const { formatMessage, formatDate } = useIntl();
+const GoalForm: FC = () => {
+  const { formatMessage } = useIntl();
   const { getAccessTokenSilently } = useAuth0();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const { register, handleSubmit } = useForm<FormInput>({
     defaultValues: {
-      text: goal?.text ?? '',
-      public: goal?.public ?? false,
+      text: '',
+      public: false,
     },
   });
   const navigate = useNavigate();
 
-  const saveGoal = goal
-    ? (formInput: PutGoalDto) =>
-        updateUserGoal(getAccessTokenSilently)(goal.id, formInput)
-    : (formInput: PostGoalDto) =>
-        createUserGoal(getAccessTokenSilently)(formInput);
-
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     setIsSubmitting(true);
     try {
-      const returnedGoal = await saveGoal({ ...data, text: data.text.trim() });
+      const returnedGoal = await createUserGoal(getAccessTokenSilently)({
+        ...data,
+        text: data.text.trim(),
+      });
 
-      if (goal) {
-        navigate('/goals');
-      } else {
-        navigate(`/goals/${returnedGoal.id}`);
-      }
+      navigate('/goals/');
     } catch (e) {
       console.warn({ error: e });
     } finally {
@@ -105,34 +82,9 @@ const GoalForm: FC<GoalFormProps> = ({ goal }) => {
             label={formatMessage(messages.goalPublic)}
           />
         </Box>
-        {goal && (
-          <>
-            <Box>
-              <TextField
-                value={goal.advice}
-                label={formatMessage(messages.goalAdvice)}
-                sx={{ textOverflow: 'ellipsis' }}
-                fullWidth
-                disabled
-              />
-              <p>{goal.advice}</p>
-            </Box>
-            <Box>
-              <TextField
-                value={formatDate(goal.createdDate, { dateStyle: 'full' })}
-                label={formatMessage(messages.goalCreated)}
-                disabled
-              />
-            </Box>
-          </>
-        )}
         <Box>
           <Button variant='contained' type='submit' disabled={isSubmitting}>
-            {formatMessage(
-              goal
-                ? messages.goalUpdateButtonText
-                : messages.goalCreateButtonText
-            )}
+            {formatMessage(messages.goalCreateButtonText)}
           </Button>
         </Box>
       </form>
