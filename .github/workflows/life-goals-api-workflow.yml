@@ -28,7 +28,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: build
-        run: yarn build
+        run: |
+          yarn install
+          yarn build
 
   terraformn:
     name: terraform
