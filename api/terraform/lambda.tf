@@ -27,4 +27,6 @@ resource "aws_lambda_function" "api_lambda_function" {
   handler       = "index.js"
 
   runtime = "nodejs18.x"
+
+  source_code_hash = filebase64sha256(local.api_lambda_file_path)
 }
