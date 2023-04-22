@@ -21,3 +21,4 @@ This will continue to be updated as I continue to work on it, but the current te
 - For local development I'm using [MongoDB](https://www.mongodb.com/) via [Docker](https://hub.docker.com/_/mongo) for data storage
 - When deployed the app will use [AWS DynamoDB](https://aws.amazon.com/dynamodb/)
 - [Jest](https://jestjs.io/) (when I add unit tests)
+- [GitHub Actions](https://docs.github.com/en/actions) for the deployment of apps/services

@@ -1,7 +1,7 @@
 import express, { Request } from 'express';
 import Goals from '../../models/goals';
 import { PostGoalDto, PutGoalDto } from '../../types';
-import { getGoalAdvice } from '../../utils/openai';
+import { getGoalAdvice } from '../../clients/openai';
 
 const privateGoalsRouter = express
   .Router()

@@ -1,5 +1,6 @@
 import { Configuration, CreateCompletionRequest, OpenAIApi } from 'openai';
-import { OPENAI_API_KEY, OPENAI_ORGANIZATION_ID } from './variables';
+import { OPENAI_API_KEY, OPENAI_ORGANIZATION_ID } from '../utils/variables';
+import logger from '../utils/logger';
 
 const configuration = new Configuration({
   organization: OPENAI_ORGANIZATION_ID,
@@ -9,8 +10,6 @@ const configuration = new Configuration({
 const openAI = new OpenAIApi(configuration);
 
 export const getGoalAdvice = async (lifeGoal: string) => {
-  const { data: models } = await openAI.listModels();
-
   const createCompletionRequest: CreateCompletionRequest = {
     model: 'text-davinci-003',
     prompt: `As someone that is asked for life advice, give someone advice about "${lifeGoal}"`,
@@ -24,9 +23,9 @@ export const getGoalAdvice = async (lifeGoal: string) => {
 
     return result.choices[0].text ?? '';
   } catch (e) {
-    console.error({ error: e });
+    logger.error('Error creating advice with OpenAI', { error: e }); // Log this for futher investigation
 
-    return '';
+    throw e;
   }
 };
 
