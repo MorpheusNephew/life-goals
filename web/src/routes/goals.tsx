@@ -6,6 +6,7 @@ import { getUserGoals } from '../services/api';
 import { GoalDto } from '../services/api/types';
 import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import GoalView from '../components/goal';
 
 const messages = defineMessages({
   personalGoalsHeader: {
@@ -21,8 +22,6 @@ const messages = defineMessages({
     defaultMessage: 'New goal',
   },
 });
-
-const showGoal = (goal: any) => <p key={goal.id}>{goal.text}</p>;
 
 const Goals = () => {
   const [goals, setGoals] = useState<GoalDto[]>();
@@ -56,7 +55,7 @@ const Goals = () => {
       {isLoading ? (
         <Loading />
       ) : goals && goals.length > 0 ? (
-        goals?.map(showGoal)
+        goals?.map((goal) => <GoalView key={goal.id} goal={goal} />)
       ) : (
         <p>{formatMessage(messages.noPersonalGoals)}</p>
       )}

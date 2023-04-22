@@ -1,6 +1,8 @@
 import { defineMessages, useIntl } from 'react-intl';
 import { LoaderFunction, useLoaderData } from 'react-router-dom';
 import { getAllPublicGoals } from '../services/api';
+import GoalView from '../components/goal';
+import { GoalDto } from '../services/api/types';
 
 export const loader: LoaderFunction = async () => {
   const publicGoals = await getAllPublicGoals();
@@ -21,16 +23,14 @@ const messages = defineMessages({
 
 const Home = () => {
   const { formatMessage } = useIntl();
-  const { publicGoals } = useLoaderData() as { publicGoals: object[] };
-
-  const showGoal = (goal: any) => <p key={goal.id}>{goal.text}</p>;
+  const { publicGoals } = useLoaderData() as { publicGoals: GoalDto[] };
 
   return (
     <>
       <section>
         <h2>{formatMessage(messages.publicGoalsHeader)}</h2>
         {publicGoals && publicGoals.length > 0 ? (
-          publicGoals?.map(showGoal)
+          publicGoals?.map((goal) => <GoalView key={goal.id} goal={goal} />)
         ) : (
           <p>{formatMessage(messages.noPublicGoals)}</p>
         )}
