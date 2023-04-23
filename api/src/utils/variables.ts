@@ -1,5 +1,4 @@
 export const AUTH0_AUDIENCE = process.env.AUTH0_AUDIENCE;
-export const AUTH0_ISSUER_BASE_URL = process.env.AUTH0_ISSUER_BASE_URL;
 export const AUTH0_TOKEN_SIGNING_ALG = process.env.AUTH0_TOKEN_SIGNING_ALG;
 export const AUTH0_MANAGEMENT_DOMAIN =
   process.env.AUTH0_MANAGEMENT_DOMAIN ?? '';
