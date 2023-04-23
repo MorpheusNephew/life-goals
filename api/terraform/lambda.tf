@@ -36,7 +36,7 @@ resource "aws_lambda_function" "api_lambda_function" {
     variables = {
       AUTH0_AUDIENCE                 = var.auth0_audience
       AUTH0_ISSUER_BASE_URL          = var.auth0_issuer_base_url
-      AUTH0_TOKEN_SIGNING_ALG        = var.auth0_token_signing_al
+      AUTH0_TOKEN_SIGNING_ALG        = var.auth0_token_signing_alg
       AUTH0_MANAGEMENT_DOMAIN        = var.auth0_management_domain
       AUTH0_MANAGEMENT_CLIENT_ID     = var.auth0_management_client_id
       AUTH0_MANAGEMENT_CLIENT_SECRET = var.auth0_management_client_secret
