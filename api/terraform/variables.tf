@@ -2,10 +2,6 @@ variable "auth0_audience" {
   type = string
 }
 
-variable "auth0_issuer_base_url" {
-  type = string
-}
-
 variable "auth0_token_signing_alg" {
   type = string
 }
