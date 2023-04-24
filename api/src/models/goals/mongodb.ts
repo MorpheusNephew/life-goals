@@ -14,7 +14,7 @@ const goalSchema = new Schema<Goal>({
 
 const GoalModel = model<Goal>('Goal', goalSchema);
 
-export default class MongoGoals implements IGoals {
+export default class MongoGoals extends IGoals {
   async createGoal(goalToCreate: PostGoal, creator: string): Promise<Goal> {
     const goal = new GoalModel({
       ...goalToCreate,
@@ -68,15 +68,5 @@ export default class MongoGoals implements IGoals {
     }
 
     return new Goal(updatedGoal.toObject());
-  }
-
-  toResource(goal: Goal): GoalDto {
-    return {
-      advice: goal.advice,
-      createdDate: goal.createdDate,
-      id: goal.id,
-      text: goal.text,
-      public: goal.public,
-    };
   }
 }

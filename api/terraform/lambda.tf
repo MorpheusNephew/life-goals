@@ -39,6 +39,7 @@ resource "aws_lambda_function" "api_lambda_function" {
       AUTH0_MANAGEMENT_DOMAIN        = var.auth0_management_domain
       AUTH0_MANAGEMENT_CLIENT_ID     = var.auth0_management_client_id
       AUTH0_MANAGEMENT_CLIENT_SECRET = var.auth0_management_client_secret
+      GOALS_DB_NAME                  = aws_dynamodb_table.life_goals_db.id
       OPENAI_API_KEY                 = var.open_ai_api_key
       OPENAI_ORGANIZATION_ID         = var.open_ai_organization_id
     }

@@ -1,18 +1,26 @@
 import { Goal, GoalDto, PostGoal, PutGoal } from '../../types';
 import MongoGoals from './mongodb';
 
-export interface IGoals {
-  createGoal(goalToCreate: PostGoal, creator: string): Promise<Goal>;
+export abstract class IGoals {
+  abstract createGoal(goalToCreate: PostGoal, creator: string): Promise<Goal>;
 
-  deleteGoal(goalId: string): Promise<void>;
+  abstract deleteGoal(goalId: string): Promise<void>;
 
-  getAllGoals(publicGoals: boolean, creator?: string): Promise<Goal[]>;
+  abstract getAllGoals(publicGoals: boolean, creator?: string): Promise<Goal[]>;
 
-  getGoal(goalId: string): Promise<Goal | undefined | null>;
+  abstract getGoal(goalId: string): Promise<Goal | undefined | null>;
 
-  updateGoal(goalId: string, updatedGoalInfo: PutGoal): Promise<Goal>;
+  abstract updateGoal(goalId: string, updatedGoalInfo: PutGoal): Promise<Goal>;
 
-  toResource(goal: Goal): GoalDto;
+  toResource(goal: Goal): GoalDto {
+    return {
+      advice: goal.advice,
+      createdDate: goal.createdDate,
+      id: goal.id,
+      text: goal.text,
+      public: goal.public,
+    };
+  }
 }
 
 const Goals = new MongoGoals();
