@@ -15,7 +15,7 @@ resource "aws_dynamodb_table" "life_goals_db" {
 
   global_secondary_index {
     name            = "PublicDateIndex"
-    hash_key        = "publicdDate"
+    hash_key        = "publicDate"
     projection_type = "ALL"
   }
 }
