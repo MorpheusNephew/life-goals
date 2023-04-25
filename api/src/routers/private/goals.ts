@@ -1,7 +1,8 @@
 import express, { Request } from 'express';
 import Goals from '../../models/goals';
-import { PostGoalDto, PutGoalDto } from '../../types';
+import { Goal, PostGoalDto, PutGoalDto } from '../../types';
 import { getGoalAdvice } from '../../clients/openai';
+import { randomUUID } from 'crypto';
 
 const privateGoalsRouter = express
   .Router()
@@ -26,15 +27,21 @@ const privateGoalsRouter = express
   })
   .post('/', async (req: Request<{}, {}, PostGoalDto>, res) => {
     const currentUser = req.auth?.payload.sub!;
-    const goalToCreate = req.body;
+    const goalInfo = req.body;
 
-    const advice = await getGoalAdvice(goalToCreate.text);
+    const advice = await getGoalAdvice(goalInfo.text);
 
-    const createdGoal = (
-      await Goals.createGoal({ ...goalToCreate, advice }, currentUser)
-    ).toResource();
+    const goalToCrate = new Goal({
+      ...goalInfo,
+      advice,
+      creator: currentUser,
+      id: randomUUID(),
+      createdDate: new Date(),
+    });
 
-    res.status(201).json(createdGoal);
+    const createdGoal = await Goals.createGoal(goalToCrate);
+
+    res.status(201).json(createdGoal.toResource());
   })
   .put(
     '/:goalId',
@@ -44,19 +51,17 @@ const privateGoalsRouter = express
       const goal = await Goals.getGoal(goalId);
       const updatedGoalInfo = req.body;
 
+      let updatedGoal: Goal;
+
       if (!goal) {
         res.sendStatus(404);
       } else if (goal.creator !== currentUser) {
         res.sendStatus(403);
       } else {
-        const updatedGoal = (
-          await Goals.updateGoal(goalId, {
-            ...goal,
-            ...updatedGoalInfo,
-          })
-        ).toResource();
+        updatedGoal = new Goal({ ...goal, ...updatedGoalInfo });
+        await Goals.updateGoal(goalId, updatedGoal);
 
-        res.json(updatedGoal);
+        res.json(updatedGoal.toResource());
       }
     }
   )
