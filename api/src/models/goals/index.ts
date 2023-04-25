@@ -1,8 +1,8 @@
-import { Goal, GoalDto, PostGoal, PutGoal } from '../../types';
+import { Goal, GoalDto } from '../../types';
 import MongoGoals from './mongodb';
 
 export interface IGoals {
-  createGoal(goalToCreate: PostGoal, creator: string): Promise<Goal>;
+  createGoal(goalToCreate: Goal): Promise<Goal>;
 
   deleteGoal(goalId: string): Promise<void>;
 
@@ -10,7 +10,7 @@ export interface IGoals {
 
   getGoal(goalId: string): Promise<Goal | undefined | null>;
 
-  updateGoal(goalId: string, updatedGoalInfo: PutGoal): Promise<Goal>;
+  updateGoal(goalId: string, updatedGoalInfo: Goal): Promise<Goal>;
 
   toResource(goal: Goal): GoalDto;
 }

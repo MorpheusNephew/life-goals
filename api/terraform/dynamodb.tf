@@ -9,13 +9,13 @@ resource "aws_dynamodb_table" "life_goals_db" {
   }
 
   attribute {
-    name = "publicCreatedDate"
+    name = "publicDate"
     type = "S"
   }
 
   global_secondary_index {
-    name            = "PublicCreatedDateIndex"
-    hash_key        = "publicCreatedDate"
+    name            = "PublicDateIndex"
+    hash_key        = "publicDate"
     projection_type = "ALL"
   }
 }

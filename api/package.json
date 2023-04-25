@@ -4,13 +4,13 @@
   "description": "GraphQL server that will handle all communications with back-end services",
   "main": "index.js",
   "author": "Jelani Jackson",
-  "type": "commonjs",
+  "type": "module",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist terraform/resources",
+    "clean": "rimraf dist",
     "prebuild": "yarn clean",
-    "build": "tsc && esbuild src/index.ts --platform=node --bundle --outfile=dist/api_lambda.js",
+    "build": "tsc && esbuild src/index.ts --platform=node --bundle --outfile=dist/api_lambda.cjs",
     "start": "ts-node -r dotenv/config ./src/index.ts",
     "test": "jest",
     "watch": "nodemon --exec \"yarn start\" --watch ./src -e .ts"
@@ -37,6 +37,7 @@
   "dependencies": {
     "auth0": "^3.3.0",
     "body-parser": "^1.20.2",
+    "dynamoose": "^3.2.0",
     "express": "^4.18.2",
     "express-oauth2-jwt-bearer": "^1.4.0",
     "mongoose": "^7.0.4",
